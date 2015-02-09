@@ -19,9 +19,12 @@ import org.json.JSONObject;
 
 
 public class TimelineActivity extends ActionBarActivity {
-    public String TAG = this.getClass().getName();
+    public String TAG = "**********>> " + this.getClass().getName();
     public ListView lvStream;
     public ActionBar actionBar;
+    TwitterClient client;
+    TwitterArrayAdapter twitterAdapter;
+    public int currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,8 @@ public class TimelineActivity extends ActionBarActivity {
         lvStream = (ListView) findViewById(R.id.lvStream);
         actionBar = getSupportActionBar();
 
-        TwitterClient client = TwitterApplication.getRestClient();
+
+        client = TwitterApplication.getRestClient();
         client.getAccountSettings(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -44,20 +48,30 @@ public class TimelineActivity extends ActionBarActivity {
             }
         });
 
-        // Getting user home
-        client.getHomeTimeline(0, new JsonHttpResponseHandler() {
+        lvStream.setOnScrollListener(new EndlessScrollListener(10, -1) { //TODO: figure this -1 out
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                getTweets(page);
+            }
+        });
+
+        // Getting first page
+        getTweets(0);
+    }
+
+    public void getTweets(int page) {
+        client.getHomeTimeline(page, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-                try {
-                    TweetList tweets = Tweet.fromJson(jsonArray);
-                    TwitterArrayAdapter adapter = new TwitterArrayAdapter(TimelineActivity.this, tweets);
-
-
-                    lvStream.setAdapter(adapter);
-
-                    Log.d(TAG, jsonArray.get(0).toString());
-                } catch (Exception e) {
-                    Log.e(TAG, "Error: " + e.getMessage());
-                    e.printStackTrace();
+                if (statusCode == 200) {
+                    try {
+                        TweetList tweets = Tweet.fromJson(jsonArray);
+                        fillAdapter(tweets);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e(TAG, "Error getting tweets. Status code: " + statusCode);
                 }
                 // Load json array into model classes
             }
@@ -68,6 +82,16 @@ public class TimelineActivity extends ActionBarActivity {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    public void fillAdapter(TweetList tweets) {
+        if(twitterAdapter == null) {
+            twitterAdapter = new TwitterArrayAdapter(this, tweets);
+            lvStream.setAdapter(twitterAdapter);
+        } else {
+            twitterAdapter.addAll(tweets);
+            twitterAdapter.notifyDataSetChanged();
+        }
     }
 
 

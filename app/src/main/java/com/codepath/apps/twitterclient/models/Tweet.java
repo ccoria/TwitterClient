@@ -58,7 +58,6 @@ public class Tweet extends Model {
     }
 
     public String getUserPicture() {
-        Log.d(TAG, userPicture);
         return userPicture;
     }
 
