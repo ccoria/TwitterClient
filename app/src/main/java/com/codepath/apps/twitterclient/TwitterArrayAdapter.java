@@ -34,6 +34,7 @@ class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvUserScreenName = (TextView) convertView.findViewById(R.id.tvUserScreenName);
         TextView tvText = (TextView) convertView.findViewById(R.id.tvText);
+        TextView tvRelativeTime = (TextView) convertView.findViewById(R.id.tvRelativeTime);
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
 
         Picasso.with(this.getContext()).load(tweet.getUserPicture())
@@ -41,6 +42,7 @@ class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
         tvUserName.setText(tweet.getUserName());
         tvUserScreenName.setText("@"+tweet.getUserScreenName());
         tvText.setText(tweet.getText());
+        tvRelativeTime.setText(tweet.getRelativeTimeAgo());
 
         return convertView;
     }

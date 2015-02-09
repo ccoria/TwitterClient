@@ -1,15 +1,23 @@
 package com.codepath.apps.twitterclient.models;
 
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.activeandroid.annotation.Table;
 
+import org.joda.time.DateTime;
+import org.joda.time.MutablePeriod;
+import org.joda.time.Period;
 import org.json.JSONArray;
 import org.json.JSONException;
         import org.json.JSONObject;
 
         import com.activeandroid.Model;
         import com.activeandroid.annotation.Column;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 @Table(name = "Tweets")
 
@@ -71,6 +79,34 @@ public class Tweet extends Model {
 
     public String getText() {
         return text;
+    }
+
+    public String getRelativeTimeAgo() {
+        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+        sf.setLenient(true);
+
+
+        String relativeDate = "";
+        try {
+            long dateMillis = sf.parse(this.getCreatedAt()).getTime();
+            relativeDate = DateUtils.getRelativeTimeSpanString(
+                    dateMillis,
+                    System.currentTimeMillis(),
+                    DateUtils.FORMAT_ABBREV_ALL).toString()
+                    .replace(" seconds ago","s")
+                    .replace(" minutes ago","m")
+                    .replace(" hours ago","h")
+                    .replace(" days ago","d");
+
+            // TODO Smarter solution
+            //MutablePeriod period = new MutablePeriod(dateMillis, System.currentTimeMillis());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return relativeDate;
     }
 
     // load a remote image url into a particular ImageView

@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.twitterclient.TimelineActivity">
+    tools:context="com.codepath.apps.twitterclient.TimelineActivity"
+    android:nestedScrollingEnabled="false"
+    style="@style/Twitter">
 
     <ListView
         android:layout_width="fill_parent"
@@ -10,5 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:choiceMode="none" />
+        android:choiceMode="none"
+        android:background="#ffd0d0d0"
+        style="@style/AppTheme" />
 </RelativeLayout>

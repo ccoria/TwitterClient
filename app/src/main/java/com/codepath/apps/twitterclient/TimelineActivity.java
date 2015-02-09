@@ -32,21 +32,12 @@ public class TimelineActivity extends ActionBarActivity {
         setContentView(R.layout.activity_timeline);
         lvStream = (ListView) findViewById(R.id.lvStream);
         actionBar = getSupportActionBar();
+        //00aceb
 
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_action_logo);
 
         client = TwitterApplication.getRestClient();
-        client.getAccountSettings(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    actionBar.setTitle("@" + response.getString("screen_name"));
-                } catch (JSONException e) {
-                    actionBar.setTitle("Home");
-                    e.printStackTrace();
-                }
-                super.onSuccess(statusCode, headers, response);
-            }
-        });
 
         lvStream.setOnScrollListener(new EndlessScrollListener(10, -1) { //TODO: figure this -1 out
             @Override
@@ -94,6 +85,21 @@ public class TimelineActivity extends ActionBarActivity {
         }
     }
 
+    public void setUsernameTitle(){
+        client.getAccountSettings(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    actionBar.setTitle("@" + response.getString("screen_name"));
+                } catch (JSONException e) {
+                    actionBar.setTitle("Home");
+                    e.printStackTrace();
+                }
+                super.onSuccess(statusCode, headers, response);
+            }
+        });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,9 +116,9 @@ public class TimelineActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+        //    return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
