@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class ComposeActivity extends ActionBarActivity {
@@ -18,6 +19,25 @@ public class ComposeActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_logo);
+
+        TextView tvUserName = (TextView) findViewById(R.id.tvCompUserName);
+        TextView tvScreenName = (TextView) findViewById(R.id.tvCompScreenName);
+
+        tvUserName.setText(TimelineActivity.user.getName());
+        tvScreenName.setText(TimelineActivity.user.getPrettyScreenName());
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Hand all the form data
+        if (requestCode == 50) {
+            if (resultCode == RESULT_OK) {
+            }
+        }
+
+        //Toast YES or NO vased on if age is greater 21
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 

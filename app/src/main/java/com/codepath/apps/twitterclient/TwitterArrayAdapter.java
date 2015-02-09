@@ -12,8 +12,6 @@ import com.codepath.apps.twitterclient.models.Tweet;
 import com.codepath.apps.twitterclient.models.TweetList;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 /**
  * Created by ccoria on 2/8/15.
  */

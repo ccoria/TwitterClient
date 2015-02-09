@@ -93,8 +93,10 @@ public class Tweet extends Model {
             relativeDate = DateUtils.getRelativeTimeSpanString(
                     dateMillis,
                     System.currentTimeMillis(),
-                    DateUtils.FORMAT_ABBREV_ALL).toString()
-                    .replace(" seconds ago","s")
+                    DateUtils.SECOND_IN_MILLIS).toString();
+
+            Log.d(TAG, relativeDate);
+            relativeDate.replace(" seconds ago","s")
                     .replace(" minutes ago","m")
                     .replace(" hours ago","h")
                     .replace(" days ago","d");
@@ -107,28 +109,5 @@ public class Tweet extends Model {
         }
 
         return relativeDate;
-    }
-
-    // load a remote image url into a particular ImageView
-    //
-
-    public static TweetList fromJson(JSONArray jsonArray) {
-        TweetList tweets = new TweetList();
-
-        for (int i=0; i < jsonArray.length(); i++) {
-            JSONObject tweetJson = null;
-            try {
-                tweetJson = jsonArray.getJSONObject(i);
-            } catch (Exception e) {
-                e.printStackTrace();
-                continue;
-            }
-
-            Tweet tweet = new Tweet(tweetJson);
-            tweet.save();
-            tweets.add(tweet);
-        }
-
-        return tweets;
     }
 }

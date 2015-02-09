@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.codepath.apps.twitterclient.models.Tweet;
 import com.codepath.apps.twitterclient.models.TweetList;
+import com.codepath.apps.twitterclient.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -21,6 +21,9 @@ import org.json.JSONObject;
 
 
 public class TimelineActivity extends ActionBarActivity {
+    //unique user of the application
+    public static User user;
+
     public String TAG = "**********>> " + this.getClass().getName();
     public ListView lvStream;
     public ActionBar actionBar;
@@ -49,14 +52,15 @@ public class TimelineActivity extends ActionBarActivity {
 
         // Getting first page
         getTweets(0);
+        getUser(); //TODO display compose button only when user is loaded
     }
 
-    public void getTweets(int page) {
+    public void getTweets(final int page) {
         client.getHomeTimeline(page, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 if (statusCode == 200) {
                     try {
-                        TweetList tweets = Tweet.fromJson(jsonArray);
+                        TweetList tweets = new TweetList(jsonArray);
                         fillAdapter(tweets);
                     } catch (Exception e) {
                         Log.e(TAG, "Error: " + e.getMessage());
@@ -86,17 +90,12 @@ public class TimelineActivity extends ActionBarActivity {
         }
     }
 
-    public void setUsernameTitle(){
-        client.getAccountSettings(new JsonHttpResponseHandler() {
+    public void getUser(){
+        client.getCredentials(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    actionBar.setTitle("@" + response.getString("screen_name"));
-                } catch (JSONException e) {
-                    actionBar.setTitle("Home");
-                    e.printStackTrace();
-                }
-                super.onSuccess(statusCode, headers, response);
+            user = User.newFromJSON(response);
+            actionBar.setTitle(actionBar.getTitle() + " - " + user.getName());
             }
         });
     }
@@ -118,6 +117,7 @@ public class TimelineActivity extends ActionBarActivity {
 
         if (id == R.id.compose) {
             Intent composeIntent = new Intent(this, ComposeActivity.class);
+            composeIntent.putExtra("user", user);
             startActivity(composeIntent);
             return true;
         }

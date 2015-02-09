@@ -5,6 +5,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.twitterclient.ComposeActivity"
-    style="@style/AppTheme">
+    android:theme="@style/AppTheme">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/etCompose"
+        android:layout_below="@+id/ivCompProfileImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivCompProfileImage"
+        android:src="@drawable/ic_launcher"
+        android:scaleType="fitCenter"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:id="@+id/tvCompUserName"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivCompProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@screenName"
+        android:id="@+id/tvCompScreenName"
+        android:textColor="#ff888888"
+        android:textSize="10dp"
+        android:singleLine="true"
+        android:elegantTextHeight="false"
+        android:layout_toRightOf="@+id/ivCompProfileImage"
+        android:layout_below="@+id/tvCompUserName" />
 </RelativeLayout>
