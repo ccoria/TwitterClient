@@ -6,11 +6,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.twitterclient.models.Tweet;
+import com.codepath.apps.twitterclient.models.TweetList;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -26,8 +27,9 @@ public class TimelineActivity extends ActionBarActivity {
         client.getHomeTimeline(0, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 try {
-                    Log.d(TAG, "timeline: " + jsonArray.getJSONObject(0).getString("text"));
-                } catch (JSONException e) {
+                    TweetList tweets = Tweet.fromJson(jsonArray);
+                    Log.d(TAG, tweets.get(0).getUserScreenName() + ":" + tweets.get(0).getText());
+                } catch (Exception e) {
                     Log.e(TAG, "Error: " + e.getMessage());
                     e.printStackTrace();
                 }

@@ -9,8 +9,6 @@ import org.json.JSONException;
         import com.activeandroid.Model;
         import com.activeandroid.annotation.Column;
 
-import java.util.ArrayList;
-
 @Table(name = "Tweets")
 
 /**
@@ -20,28 +18,49 @@ public class Tweet extends Model {
     // Define database columns and associated fields
     @Column(name = "userId")
     String userId;
-    @Column(name = "userHandle")
-    String userHandle;
-    @Column(name = "timestamp")
-    String timestamp;
-    @Column(name = "body")
-    String body;
+    @Column(name = "screenName")
+    String screenName;
+    @Column(name = "createdAt")
+    String createdAt;
+    @Column(name = "text")
+    String text;
 
     public Tweet(JSONObject object){
         super();
 
         try {
-            this.userId = object.getString("user_id");
-            this.userHandle = object.getString("user_username");
-            this.timestamp = object.getString("timestamp");
-            this.body = object.getString("body");
+            JSONObject user = object.getJSONObject("user");
+            this.userId = user.getString("id");
+            this.screenName = user.getString("screen_name");
+            this.createdAt = object.getString("created_at");
+            this.text = object.getString("text");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
-        ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserScreenName() {
+        return screenName;
+    }
+
+    public String createdAt() {
+        return createdAt;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    // load a remote image url into a particular ImageView
+    //Picasso.with(this).load(imageUrl).
+    //noFade().fit().into(imageView);
+
+    public static TweetList fromJson(JSONArray jsonArray) {
+        TweetList tweets = new TweetList();
 
         for (int i=0; i < jsonArray.length(); i++) {
             JSONObject tweetJson = null;
