@@ -1,10 +1,12 @@
 package com.codepath.apps.twitterclient;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.codepath.apps.twitterclient.models.Tweet;
 import com.codepath.apps.twitterclient.models.TweetList;
@@ -12,23 +14,47 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class TimelineActivity extends ActionBarActivity {
     public String TAG = this.getClass().getName();
+    public ListView lvStream;
+    public ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        lvStream = (ListView) findViewById(R.id.lvStream);
+        actionBar = getSupportActionBar();
 
         TwitterClient client = TwitterApplication.getRestClient();
+        client.getAccountSettings(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    actionBar.setTitle("@" + response.getString("screen_name"));
+                } catch (JSONException e) {
+                    actionBar.setTitle("Home");
+                    e.printStackTrace();
+                }
+                super.onSuccess(statusCode, headers, response);
+            }
+        });
+
+        // Getting user home
         client.getHomeTimeline(0, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 try {
                     TweetList tweets = Tweet.fromJson(jsonArray);
-                    Log.d(TAG, tweets.get(0).getUserScreenName() + ":" + tweets.get(0).getText());
+                    TwitterArrayAdapter adapter = new TwitterArrayAdapter(TimelineActivity.this, tweets);
+
+
+                    lvStream.setAdapter(adapter);
+
+                    Log.d(TAG, jsonArray.get(0).toString());
                 } catch (Exception e) {
                     Log.e(TAG, "Error: " + e.getMessage());
                     e.printStackTrace();

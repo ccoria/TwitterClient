@@ -1,5 +1,7 @@
 package com.codepath.apps.twitterclient.models;
 
+import android.util.Log;
+
 import com.activeandroid.annotation.Table;
 
 import org.json.JSONArray;
@@ -15,11 +17,17 @@ import org.json.JSONException;
  * Created by ccoria on 2/8/15.
  */
 public class Tweet extends Model {
+    String TAG = this.getClass().getName();
+
     // Define database columns and associated fields
     @Column(name = "userId")
     String userId;
-    @Column(name = "screenName")
-    String screenName;
+    @Column(name = "userName")
+    String userName;
+    @Column(name = "userPicture")
+    String userPicture;
+    @Column(name = "userScreenName")
+    String userScreenName;
     @Column(name = "createdAt")
     String createdAt;
     @Column(name = "text")
@@ -31,7 +39,9 @@ public class Tweet extends Model {
         try {
             JSONObject user = object.getJSONObject("user");
             this.userId = user.getString("id");
-            this.screenName = user.getString("screen_name");
+            this.userName = user.getString("name");
+            this.userPicture = user.getString("profile_image_url");
+            this.userScreenName = user.getString("screen_name");
             this.createdAt = object.getString("created_at");
             this.text = object.getString("text");
         } catch (JSONException e) {
@@ -43,12 +53,21 @@ public class Tweet extends Model {
         return userId;
     }
 
-    public String getUserScreenName() {
-        return screenName;
+    public String getUserName() {
+        return userName;
     }
 
-    public String createdAt() {
+    public String getUserPicture() {
+        Log.d(TAG, userPicture);
+        return userPicture;
+    }
+
+    public String getCreatedAt() {
         return createdAt;
+    }
+
+    public String getUserScreenName() {
+        return userScreenName;
     }
 
     public String getText() {
@@ -56,8 +75,7 @@ public class Tweet extends Model {
     }
 
     // load a remote image url into a particular ImageView
-    //Picasso.with(this).load(imageUrl).
-    //noFade().fit().into(imageView);
+    //
 
     public static TweetList fromJson(JSONArray jsonArray) {
         TweetList tweets = new TweetList();
