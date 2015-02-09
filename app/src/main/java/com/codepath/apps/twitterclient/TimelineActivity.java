@@ -1,5 +1,6 @@
 package com.codepath.apps.twitterclient;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.apps.twitterclient.models.Tweet;
 import com.codepath.apps.twitterclient.models.TweetList;
@@ -31,9 +33,8 @@ public class TimelineActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         lvStream = (ListView) findViewById(R.id.lvStream);
-        actionBar = getSupportActionBar();
-        //00aceb
 
+        actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_logo);
 
@@ -69,7 +70,7 @@ public class TimelineActivity extends ActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(TAG, "Error: " + errorResponse);
+                Log.e(TAG, "getTweets Error: " + errorResponse);
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
@@ -115,11 +116,16 @@ public class TimelineActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-        //    return true;
-        //}
+        if (id == R.id.compose) {
+            Intent composeIntent = new Intent(this, ComposeActivity.class);
+            startActivity(composeIntent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onComposeClick(MenuItem item) {
+        Toast.makeText(this, "Compose Click!", Toast.LENGTH_SHORT).show();
     }
 }

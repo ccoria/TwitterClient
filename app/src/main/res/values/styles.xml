@@ -16,6 +16,11 @@
 
     <style name="Twitter" parent="AppBaseTheme">
         <item name="android:background">#00aceb</item>
+        <item name="android:actionBarStyle">@style/Twitter.ActionBar</item>
+    </style>
+
+    <style name="Twitter.ActionBar" parent="Twitter">
+        <item name="android:background">#FF0000</item>
     </style>
 
 </resources>
