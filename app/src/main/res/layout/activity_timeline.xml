@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.twitterclient.TimelineActivity"
     android:nestedScrollingEnabled="false"
-    style="@style/Twitter">
+    android:theme="@style/Twitter">
 
     <ListView
         android:layout_width="fill_parent"

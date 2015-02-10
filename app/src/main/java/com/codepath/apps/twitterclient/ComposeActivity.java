@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 
@@ -25,15 +27,18 @@ public class ComposeActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.ic_action_logo);
+        actionBar.setIcon(R.drawable.ic_logo_white);
 
         TextView tvUserName = (TextView) findViewById(R.id.tvCompUserName);
         TextView tvScreenName = (TextView) findViewById(R.id.tvCompScreenName);
+        ImageView ivProfileImage = (ImageView) findViewById(R.id.ivCompProfileImage);
 
         etCompose = (TextView) findViewById(R.id.etCompose);
 
         tvUserName.setText(TimelineActivity.user.getName());
         tvScreenName.setText(TimelineActivity.user.getPrettyScreenName());
+        Picasso.with(this).load(TimelineActivity.user.getProfileImageURL())
+                .noFade().fit().into(ivProfileImage);
 
     }
 
@@ -70,9 +75,7 @@ public class ComposeActivity extends ActionBarActivity {
             client.postTweet(etCompose.getText().toString(), new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Intent timelineIntent = new Intent(ComposeActivity.this, TimelineActivity.class);
-                    Log.d("******* ComposeActivity", responseBody.toString());
-                    startActivity(timelineIntent);
+                    ComposeActivity.this.finish();
                 }
 
                 @Override

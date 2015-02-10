@@ -86,7 +86,6 @@ public class Tweet extends Model {
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         sf.setLenient(true);
 
-
         String relativeDate = "";
         try {
             long dateMillis = sf.parse(this.getCreatedAt()).getTime();
@@ -95,14 +94,18 @@ public class Tweet extends Model {
                     System.currentTimeMillis(),
                     DateUtils.SECOND_IN_MILLIS).toString();
 
-            Log.d(TAG, relativeDate);
-            relativeDate.replace(" seconds ago","s")
+            relativeDate = relativeDate
+                    .replace(" seconds ago","s")
+                    .replace("in 1 second","1s")
                     .replace(" minutes ago","m")
+                    .replace("in 1 minute","1m")
                     .replace(" hours ago","h")
-                    .replace(" days ago","d");
+                    .replace("in 1 hour","1h")
+                    .replace(" days ago","d")
+                    .replace("in 1 day","1d");
 
-            // TODO Smarter solution
-            //MutablePeriod period = new MutablePeriod(dateMillis, System.currentTimeMillis());
+            // TODO Smarter solution (use lib)
+            // MutablePeriod period = new MutablePeriod(dateMillis, System.currentTimeMillis());
 
         } catch (ParseException e) {
             e.printStackTrace();

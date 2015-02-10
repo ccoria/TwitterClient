@@ -15,7 +15,7 @@
     <application
         android:name=".TwitterApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_logo_white"
         android:label="@string/app_name"
         android:theme="@style/Twitter" >
         <meta-data
@@ -28,7 +28,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/Twitter" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -2,6 +2,7 @@ package com.codepath.apps.twitterclient;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -15,6 +16,10 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_logo_white);
 	}
 
 
@@ -44,7 +49,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
-		Log.i(TAG, ">>>>> connecting to twitter...");
         getClient().connect();
 	}
 }

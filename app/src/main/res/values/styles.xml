@@ -6,21 +6,25 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:background">#ffffff</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="Twitter" parent="AppBaseTheme">
-        <item name="android:background">#00aceb</item>
+        <item name="android:background">#ff5fb2ee</item>
+        <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/Twitter.ActionBar</item>
     </style>
 
-    <style name="Twitter.ActionBar" parent="Twitter">
+    <style name="Twitter.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:background">#FF0000</item>
+        <item name="android:height">20dp</item>
     </style>
 
 </resources>

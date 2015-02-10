@@ -9,7 +9,7 @@
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/etCompose"
@@ -17,17 +17,24 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:maxLength="140"
+        android:hint="What is Happening?"
+        android:gravity="top"
+        android:layout_marginTop="15dp"
+        android:background="#FFFFFF" />
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/ivCompProfileImage"
         android:src="@drawable/ic_launcher"
         android:scaleType="fitCenter"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,7 +44,8 @@
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivCompProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage" />
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,7 +53,7 @@
         android:text="\@screenName"
         android:id="@+id/tvCompScreenName"
         android:textColor="#ff888888"
-        android:textSize="10dp"
+        android:textSize="15sp"
         android:singleLine="true"
         android:elegantTextHeight="false"
         android:layout_toRightOf="@+id/ivCompProfileImage"

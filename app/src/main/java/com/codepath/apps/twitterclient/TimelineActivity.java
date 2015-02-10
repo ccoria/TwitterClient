@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.twitterclient.models.TweetList;
@@ -27,6 +30,7 @@ public class TimelineActivity extends ActionBarActivity {
     public String TAG = "**********>> " + this.getClass().getName();
     public ListView lvStream;
     public ActionBar actionBar;
+    public ImageView ivComposeBtn;
     TwitterClient client;
     TwitterArrayAdapter twitterAdapter;
     public int currentPage;
@@ -38,10 +42,11 @@ public class TimelineActivity extends ActionBarActivity {
         lvStream = (ListView) findViewById(R.id.lvStream);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.ic_action_logo);
+        actionBar.setIcon(R.drawable.ic_logo_white);
+        //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getSupportActionBar().setCustomView(R.layout.actionbar_timeline);
 
         client = TwitterApplication.getRestClient();
-
         lvStream.setOnScrollListener(new EndlessScrollListener(10, -1) { //TODO: figure this -1 out
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
@@ -49,12 +54,23 @@ public class TimelineActivity extends ActionBarActivity {
             }
         });
 
+        /*ivComposeBtn = (ImageView) findViewById(R.id.ivCompose);
+        ivComposeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent composeIntent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivity(composeIntent);
+
+            }
+        });*/
+
         // Getting first page
         getTweets(0);
         getUser(); //TODO display compose button only when user is loaded
     }
 
     public void getTweets(final int page) {
+        Log.d(TAG, "getting page " + page);
         client.getHomeTimeline(page, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 if (statusCode == 200) {
@@ -81,11 +97,10 @@ public class TimelineActivity extends ActionBarActivity {
 
     public void fillAdapter(TweetList tweets) {
         if(twitterAdapter == null) {
-            twitterAdapter = new TwitterArrayAdapter(this, tweets);
+            twitterAdapter = new TwitterArrayAdapter(TimelineActivity.this, tweets);
             lvStream.setAdapter(twitterAdapter);
         } else {
             twitterAdapter.addAll(tweets);
-            twitterAdapter.notifyDataSetChanged();
         }
     }
 
@@ -93,8 +108,8 @@ public class TimelineActivity extends ActionBarActivity {
         client.getCredentials(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            user = User.newFromJSON(response);
-            actionBar.setTitle(actionBar.getTitle() + " - " + user.getName());
+                user = User.newFromJSON(response);
+                //actionBar.setTitle(actionBar.getTitle() + " - " + user.getName());
             }
         });
     }
