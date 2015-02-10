@@ -1,5 +1,5 @@
 # AndroidImageSearch
 
-Google Image Search for Android learning
+Simple Twitter Client for Android learning
 
 ![Walkthrough](SampleTwitterClient.gif)
