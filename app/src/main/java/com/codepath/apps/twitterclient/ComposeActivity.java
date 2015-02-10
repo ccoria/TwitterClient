@@ -4,12 +4,19 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.Header;
 
 
 public class ComposeActivity extends ActionBarActivity {
+    TextView etCompose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,8 @@ public class ComposeActivity extends ActionBarActivity {
 
         TextView tvUserName = (TextView) findViewById(R.id.tvCompUserName);
         TextView tvScreenName = (TextView) findViewById(R.id.tvCompScreenName);
+
+        etCompose = (TextView) findViewById(R.id.etCompose);
 
         tvUserName.setText(TimelineActivity.user.getName());
         tvScreenName.setText(TimelineActivity.user.getPrettyScreenName());
@@ -57,8 +66,21 @@ public class ComposeActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_tweet) {
-            Intent timelineIntent = new Intent(this, TimelineActivity.class);
-            startActivity(timelineIntent);
+            TwitterClient client = TwitterApplication.getRestClient();
+            client.postTweet(etCompose.getText().toString(), new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Intent timelineIntent = new Intent(ComposeActivity.this, TimelineActivity.class);
+                    Log.d("******* ComposeActivity", responseBody.toString());
+                    startActivity(timelineIntent);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Toast.makeText(ComposeActivity.this, "Error posting: " + error.getMessage(), Toast.LENGTH_SHORT);
+                }
+            });
+
             return true;
         }
 
