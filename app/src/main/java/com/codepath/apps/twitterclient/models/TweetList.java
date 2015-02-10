@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class TweetList extends ArrayList<Tweet> {
 
+    public TweetList(){}
     public TweetList(JSONArray jsonArray) {
 
         for (int i=0; i < jsonArray.length(); i++) {

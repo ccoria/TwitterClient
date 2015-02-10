@@ -28,7 +28,6 @@ public class TimelineActivity extends ActionBarActivity {
     public static User user;
 
     public String TAG = "**********>> " + this.getClass().getName();
-    public ListView lvStream;
     public ActionBar actionBar;
     public ImageView ivComposeBtn;
     TwitterClient client;
@@ -39,7 +38,7 @@ public class TimelineActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        lvStream = (ListView) findViewById(R.id.lvStream);
+        final ListView lvStream = (ListView) findViewById(R.id.lvStream);
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_logo_white);
@@ -47,10 +46,10 @@ public class TimelineActivity extends ActionBarActivity {
         //getSupportActionBar().setCustomView(R.layout.actionbar_timeline);
 
         client = TwitterApplication.getRestClient();
-        lvStream.setOnScrollListener(new EndlessScrollListener(10, -1) { //TODO: figure this -1 out
+        lvStream.setOnScrollListener(new EndlessScrollListener(3, -1) { //TODO: figure this -1 out
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                getTweets(page);
+                getTweets(page, lvStream);
             }
         });
 
@@ -65,18 +64,18 @@ public class TimelineActivity extends ActionBarActivity {
         });*/
 
         // Getting first page
-        getTweets(0);
+        getTweets(0, lvStream);
         getUser(); //TODO display compose button only when user is loaded
     }
 
-    public void getTweets(final int page) {
+    public void getTweets(final int page, final ListView lvStream) {
         Log.d(TAG, "getting page " + page);
         client.getHomeTimeline(page, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 if (statusCode == 200) {
                     try {
                         TweetList tweets = new TweetList(jsonArray);
-                        fillAdapter(tweets);
+                        fillAdapter(tweets, lvStream);
                     } catch (Exception e) {
                         Log.e(TAG, "Error: " + e.getMessage());
                         e.printStackTrace();
@@ -95,7 +94,7 @@ public class TimelineActivity extends ActionBarActivity {
         });
     }
 
-    public void fillAdapter(TweetList tweets) {
+    public void fillAdapter(TweetList tweets, ListView lvStream) {
         if(twitterAdapter == null) {
             twitterAdapter = new TwitterArrayAdapter(TimelineActivity.this, tweets);
             lvStream.setAdapter(twitterAdapter);
