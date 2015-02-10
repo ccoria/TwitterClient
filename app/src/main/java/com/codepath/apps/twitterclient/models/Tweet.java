@@ -100,7 +100,7 @@ public class Tweet extends Model {
                     .replace(" minutes ago","m")
                     .replace("in 1 minute","1m")
                     .replace(" hours ago","h")
-                    .replace("in 1 hour","1h")
+                    .replace("1 hour ago","1h")
                     .replace(" days ago","d")
                     .replace("in 1 day","1d");
 

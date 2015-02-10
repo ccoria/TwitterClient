@@ -46,25 +46,15 @@ public class TimelineActivity extends ActionBarActivity {
         //getSupportActionBar().setCustomView(R.layout.actionbar_timeline);
 
         client = TwitterApplication.getRestClient();
-        lvStream.setOnScrollListener(new EndlessScrollListener(3, -1) { //TODO: figure this -1 out
+        lvStream.setOnScrollListener(new EndlessScrollListener(3, 0) { //TODO: figure this -1 out
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 getTweets(page, lvStream);
             }
         });
 
-        /*ivComposeBtn = (ImageView) findViewById(R.id.ivCompose);
-        ivComposeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent composeIntent = new Intent(TimelineActivity.this, ComposeActivity.class);
-                startActivity(composeIntent);
-
-            }
-        });*/
-
         // Getting first page
-        getTweets(0, lvStream);
+        getTweets(1, lvStream);
         getUser(); //TODO display compose button only when user is loaded
     }
 
@@ -94,12 +84,18 @@ public class TimelineActivity extends ActionBarActivity {
         });
     }
 
+    //TODO: implement an assync task for this
     public void fillAdapter(TweetList tweets, ListView lvStream) {
         if(twitterAdapter == null) {
+            Log.d(TAG, "Creating From: " + tweets.get(0).getText());
+            Log.d(TAG, "Creating To: " + tweets.get(tweets.size()-1).getText());
             twitterAdapter = new TwitterArrayAdapter(TimelineActivity.this, tweets);
             lvStream.setAdapter(twitterAdapter);
         } else {
+            Log.d(TAG, "From: " + tweets.get(0).getText());
+            Log.d(TAG, "To: " + tweets.get(tweets.size()-1).getText());
             twitterAdapter.addAll(tweets);
+            twitterAdapter.notifyDataSetChanged();
         }
     }
 
