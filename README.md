@@ -1,3 +1,5 @@
-Twitter Client
+# AndroidImageSearch
 
-Android Twitter Client for studying purposes
+Google Image Search for Android learning
+
+![Walkthrough](SampleTwitterClient.gif)
