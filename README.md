@@ -1,4 +1,4 @@
-# AndroidImageSearch
+# Twitter Client
 
 Simple Twitter Client for Android learning
 
