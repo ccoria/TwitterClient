@@ -3,9 +3,10 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:paddingTop="6dp"
     android:paddingBottom="5dp"
-    android:backgroundTintMode="src_over"
     style="@style/AppTheme"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
 
     <ImageView
         android:layout_width="50dp"
@@ -28,7 +29,9 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivProfileImage"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:theme="@style/AppTheme"
+        android:background="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +43,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="3dp" />
+        android:layout_marginTop="3dp"
+        android:theme="@style/AppTheme"
+        android:background="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,7 +60,9 @@
         android:textSize="10dp"
         android:singleLine="true"
         android:layout_marginTop="2dp"
-        android:elegantTextHeight="false" />
+        android:elegantTextHeight="false"
+        android:theme="@style/AppTheme"
+        android:background="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,5 +76,7 @@
         android:textSize="12dp"
         android:layout_marginRight="10dp"
         android:layout_alignBottom="@+id/tvUserScreenName"
-        android:textColor="#ffc7c7c7" />
+        android:textColor="#ffc7c7c7"
+        android:theme="@style/AppTheme"
+        android:background="#FFFFFF" />
 </RelativeLayout>

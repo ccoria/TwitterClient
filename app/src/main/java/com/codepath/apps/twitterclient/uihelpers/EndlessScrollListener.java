@@ -1,4 +1,4 @@
-package com.codepath.apps.twitterclient;
+package com.codepath.apps.twitterclient.uihelpers;
 
 /**
  * Created by ccoria on 2/8/15.

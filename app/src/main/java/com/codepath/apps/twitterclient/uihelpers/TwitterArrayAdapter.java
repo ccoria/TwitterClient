@@ -1,4 +1,4 @@
-package com.codepath.apps.twitterclient;
+package com.codepath.apps.twitterclient.uihelpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.codepath.apps.twitterclient.R;
 import com.codepath.apps.twitterclient.models.Tweet;
 import com.codepath.apps.twitterclient.models.TweetList;
 import com.squareup.picasso.Picasso;
@@ -15,10 +17,10 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by ccoria on 2/8/15.
  */
-class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
+public class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
 
-    TwitterArrayAdapter(Context context, TweetList objects) {
-        super(context, R.layout.tweet, objects);
+    TwitterArrayAdapter(Context context) {
+        super(context, R.layout.tweet);
     }
 
     @Override
@@ -43,5 +45,22 @@ class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
         tvRelativeTime.setText(tweet.getRelativeTimeAgo());
 
         return convertView;
+    }
+
+    public void addTweets(TweetList tweets){
+        //Log.d(TAG, "Adding From: " + tweets.get(0).getText());
+        //Log.d(TAG, "Adding To: " + tweets.get(tweets.size()-1).getText());
+        adapterInstance.addAll(tweets);
+        adapterInstance.notifyDataSetChanged();
+    }
+
+    private static TwitterArrayAdapter adapterInstance;
+    public static TwitterArrayAdapter getAdapter(Context context, ListView listView) {
+        if(adapterInstance == null) {
+            adapterInstance = new TwitterArrayAdapter(context);
+            listView.setAdapter(adapterInstance);
+        }
+
+        return adapterInstance;
     }
 }
