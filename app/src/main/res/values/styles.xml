@@ -6,25 +6,36 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-        <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <color name="white">#FFFFFF</color>
+    <color name="twitter">#ff5fb2ee</color>
+    <color name="gray">#ffa8a8a8</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="android:background">#ffffff</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="background">@color/white</item>
+
         <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:actionBarStyle">@style/CustomActionBarTheme</item>
+        <item name="actionBarStyle">@style/CustomActionBarTheme</item>
+        <item name="android:textColor">@color/twitter</item>
     </style>
 
-    <style name="Twitter" parent="AppBaseTheme">
-        <item name="android:background">#ff5fb2ee</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionBarStyle">@style/Twitter.ActionBar</item>
+    <style name="ContentTheme" parent="AppTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Twitter.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:background">#FF0000</item>
-        <item name="android:height">20dp</item>
+    <style name="CustomActionBarTheme" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@color/twitter</item>
+        <item name="height">50dp</item>
     </style>
 
 </resources>
