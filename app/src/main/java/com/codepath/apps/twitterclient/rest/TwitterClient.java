@@ -31,7 +31,7 @@ public class TwitterClient extends OAuthBaseClient {
 	public static final String REST_CALLBACK_URL = "oauth://codepathtweets"; // Change this (here and in manifest)
 
     public enum TIMELINE_TYPE {
-        HOME, MENTIONS
+        HOME, MENTIONS, USER
     }
 
 	public TwitterClient(Context context) {
@@ -39,31 +39,21 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
     public void getHomeTimeline(int page, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("statuses/home_timeline.json");
-        RequestParams params = new RequestParams();
-        params.put("page", String.valueOf(page));
-        getClient().get(apiUrl, params, handler);
+        getTimeline(
+                "statuses/home_timeline.json",
+                new RequestParams("page", String.valueOf(page)),
+                handler);
     }
 
     public void getMentionsTimeline(int page, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
-        RequestParams params = new RequestParams();
-        params.put("page", String.valueOf(page));
-        getClient().get(apiUrl, params, handler);
+        getTimeline(
+                "statuses/mentions_timeline.json",
+                new RequestParams("page", String.valueOf(page)),
+                handler);
     }
 
-    public void getTimeline(TIMELINE_TYPE type, int page, AsyncHttpResponseHandler handler) {
-        String endpoint = "statuses/home_timeline.json";
-
-        if (type == TIMELINE_TYPE.HOME) {
-            endpoint = "statuses/home_timeline.json";
-        } else if (type == TIMELINE_TYPE.MENTIONS) {
-            endpoint = "statuses/mentions_timeline.json";
-        }
-
+    public void getTimeline(String endpoint, RequestParams params, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl(endpoint);
-        RequestParams params = new RequestParams();
-        params.put("page", String.valueOf(page));
         getClient().get(apiUrl, params, handler);
     }
 

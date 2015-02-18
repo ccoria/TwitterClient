@@ -1,5 +1,7 @@
 package com.codepath.apps.twitterclient;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +14,14 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        // Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // Replace the container with the new fragment
+        ft.replace(R.id.frame_stream, StreamFragment.newInstance(3));
+        // or ft.add(R.id.your_placeholder, new FooFragment());
+        // Execute the changes specified
+        ft.commit();
     }
 
 
@@ -30,7 +40,10 @@ public class ProfileActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.home) {
+            //Intent homeIntent = new Intent(this, MainActivity.class);
+            //startActivity(homeIntent);
+            this.finish();
             return true;
         }
 

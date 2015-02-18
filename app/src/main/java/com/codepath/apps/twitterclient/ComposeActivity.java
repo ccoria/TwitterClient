@@ -82,8 +82,8 @@ public class ComposeActivity extends ActionBarActivity {
             client.postTweet(etCompose.getText().toString(), new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Intent composeIntent = new Intent(ComposeActivity.this, MainActivity.class);
-                    startActivity(composeIntent);
+                    //Intent composeIntent = new Intent(ComposeActivity.this, MainActivity.class);
+                    //startActivity(composeIntent);
                     ComposeActivity.this.finish();
                 }
 

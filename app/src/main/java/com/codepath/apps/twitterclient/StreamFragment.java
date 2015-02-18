@@ -58,41 +58,17 @@ public class StreamFragment extends Fragment {
 
         adapter = new TwitterArrayAdapter(view.getContext());
         lvStream.setAdapter(adapter);
-        TwitterClient.TIMELINE_TYPE timeline_type = TwitterClient.TIMELINE_TYPE.HOME;
-
-        if (mPage == 0) {
-            timeline_type = TwitterClient.TIMELINE_TYPE.HOME;
-        } else if (mPage == 1) {
-            timeline_type = TwitterClient.TIMELINE_TYPE.MENTIONS;
-        }
-
-        getTimeline(timeline_type, 1);
 
         return view;
     }
 
-    public void getTimeline(TwitterClient.TIMELINE_TYPE type, final int page) {
-        TwitterApplication.getRestClient().getTimeline(type, page, new JsonHttpResponseHandler() {
-            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-                if (statusCode == 200) {
-                    try {
-                        adapter.addAll(new TweetList(jsonArray));
-                        adapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                } else {
-                    Log.e(TAG, "Error getting tweets. Status code: " + statusCode);
-                }
-                // Load json array into model classes
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(TAG, "getTweets Error: " + errorResponse);
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
+    public void addTweets (JSONArray jsonArrayTweets) {
+        try {
+            adapter.addAll(new TweetList(jsonArrayTweets));
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            Log.e(TAG, "Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

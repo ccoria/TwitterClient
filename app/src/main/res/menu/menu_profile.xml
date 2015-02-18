@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.codepath.apps.twitterclient.ProfileActivity">
     <item
-        android:id="@+id/ic_home"
+        android:id="@+id/home"
         android:icon="@drawable/ic_home"
         android:title="Home"
         app:showAsAction="always">

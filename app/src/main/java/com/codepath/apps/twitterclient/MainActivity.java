@@ -103,6 +103,13 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.profile) {
+            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            profileIntent.putExtra("user", user);
+            startActivity(profileIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
