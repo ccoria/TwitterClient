@@ -17,8 +17,13 @@ public class ProfileActivity extends ActionBarActivity {
 
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        StreamFragment fragment = StreamFragment.newInstance(0);
         // Replace the container with the new fragment
-        ft.replace(R.id.frame_stream, StreamFragment.newInstance(3));
+        ft.replace(R.id.frame_stream, fragment);
+
+        StreamFragmentAdapter.getUserTimeline(MainActivity.user.getId(), 1, fragment);
+
         // or ft.add(R.id.your_placeholder, new FooFragment());
         // Execute the changes specified
         ft.commit();

@@ -51,28 +51,32 @@ public class StreamFragmentAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
-    public void getHomeTimeline(final int page, final StreamFragment fragment) {
+    public static void getHomeTimeline(final int page, final StreamFragment fragment) {
         TwitterApplication.getRestClient().getHomeTimeline(page, getHandler(fragment));
     }
 
-    public void getMentionsTimeline(final int page, final StreamFragment fragment) {
+    public static void getMentionsTimeline(final int page, final StreamFragment fragment) {
         TwitterApplication.getRestClient().getMentionsTimeline(page, getHandler(fragment));
     }
 
-    private JsonHttpResponseHandler getHandler(final StreamFragment fragment) {
+    public static void getUserTimeline(final int userId, final int page, final StreamFragment fragment) {
+        TwitterApplication.getRestClient().getUserTimeline(userId, page, getHandler(fragment));
+    }
+
+    public static JsonHttpResponseHandler getHandler(final StreamFragment fragment) {
         return  new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 if (statusCode == 200) {
                     fragment.addTweets(jsonArray);
                 } else {
-                    Log.e(TAG, "Error getting tweets. Status code: " + statusCode);
+                    Log.e("StreamFragmentAdapter", "Error getting tweets. Status code: " + statusCode);
                 }
                 // Load json array into model classes
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(TAG, "getTweets Error: " + errorResponse);
+                Log.e("StreamFragmentAdapter", "getTweets Error: " + errorResponse);
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         };
