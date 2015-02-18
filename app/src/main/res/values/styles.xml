@@ -22,10 +22,9 @@
         <item name="background">@color/white</item>
 
         <item name="android:windowContentOverlay">@null</item>
-
+        <item name="android:textColor">@color/twitter</item>
         <item name="android:actionBarStyle">@style/CustomActionBarTheme</item>
         <item name="actionBarStyle">@style/CustomActionBarTheme</item>
-        <item name="android:textColor">@color/twitter</item>
     </style>
 
     <style name="ContentTheme" parent="AppTheme">
@@ -35,7 +34,16 @@
 
     <style name="CustomActionBarTheme" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@color/twitter</item>
-        <item name="height">50dp</item>
+        <item name="android:windowBackground">@color/twitter</item>
+        <item name="android:textSize">14sp</item>
+
+        <!--item name="height">40dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingBottom">0dp</item-->
     </style>
 
 </resources>

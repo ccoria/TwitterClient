@@ -31,7 +31,8 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:textStyle="bold"
         android:theme="@style/AppTheme"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,7 +46,8 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="3dp"
         android:theme="@style/AppTheme"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"

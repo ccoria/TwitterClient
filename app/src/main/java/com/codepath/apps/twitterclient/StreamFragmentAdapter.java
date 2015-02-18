@@ -4,13 +4,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.ListView;
+
+import com.codepath.apps.twitterclient.rest.TwitterApplication;
+import com.codepath.apps.twitterclient.rest.TwitterClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by ccoria on 2/16/15.
  */
-public class StreamFragmentAdapter  extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+public class StreamFragmentAdapter extends FragmentPagerAdapter {
+    public String TAG = "**********>> " + this.getClass().getName();
+    private String tabTitles[] = new String[] { "Home", "Mentions" };
+    public final int COUNT = 2;
 
     public StreamFragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -18,12 +34,14 @@ public class StreamFragmentAdapter  extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return COUNT;
     }
 
     @Override
-    public Fragment getItem(int position) {
-        return StreamFragment.newInstance(position + 1);
+    public Fragment getItem(int tab_index) {
+        Log.d(TAG, "Getting Fragment " + tab_index);
+        StreamFragment fragment = StreamFragment.newInstance(tab_index);
+        return fragment;
     }
 
     @Override

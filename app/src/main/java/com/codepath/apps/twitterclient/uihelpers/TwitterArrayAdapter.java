@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
  */
 public class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
 
-    TwitterArrayAdapter(Context context) {
+    public TwitterArrayAdapter(Context context) {
         super(context, R.layout.tweet);
     }
 
