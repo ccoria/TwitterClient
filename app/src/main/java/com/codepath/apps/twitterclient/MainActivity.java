@@ -2,6 +2,7 @@ package com.codepath.apps.twitterclient;
 
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.twitterclient.models.TweetList;
+import com.codepath.apps.twitterclient.models.User;
 import com.codepath.apps.twitterclient.rest.TwitterApplication;
 import com.codepath.apps.twitterclient.rest.TwitterClient;
 import com.codepath.apps.twitterclient.uihelpers.TwitterArrayAdapter;
@@ -35,6 +37,7 @@ import java.lang.ref.WeakReference;
 
 
 public class MainActivity extends ActionBarActivity {
+    public static User user;
 
     public String TAG = "**********>> " + this.getClass().getName();
     private SmartFragmentStatePagerAdapter adapterViewPager;
@@ -48,6 +51,8 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_logo_white);
         actionBar.setTitle("Home");
+
+        getUser();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -80,10 +85,6 @@ public class MainActivity extends ActionBarActivity {
         //Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        /*
-
-        */
-
         return true;
     }
 
@@ -95,10 +96,23 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
+        if (id == R.id.compose) {
+            Intent composeIntent = new Intent(this, ComposeActivity.class);
+            composeIntent.putExtra("user", user);
+            startActivity(composeIntent);
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getUser(){
+        TwitterApplication.getRestClient().getCredentials(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                user = User.newFromJSON(response);
+                //actionBar.setTitle(actionBar.getTitle() + " - " + user.getName());
+            }
+        });
     }
 }

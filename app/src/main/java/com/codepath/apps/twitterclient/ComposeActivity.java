@@ -10,12 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.apps.twitterclient.models.User;
 import com.codepath.apps.twitterclient.rest.TwitterApplication;
 import com.codepath.apps.twitterclient.rest.TwitterClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
+
+import java.io.Serializable;
 
 
 public class ComposeActivity extends ActionBarActivity {
@@ -36,9 +39,12 @@ public class ComposeActivity extends ActionBarActivity {
 
         etCompose = (TextView) findViewById(R.id.etCompose);
 
-        tvUserName.setText(TimelineActivity.user.getName());
-        tvScreenName.setText(TimelineActivity.user.getPrettyScreenName());
-        Picasso.with(this).load(TimelineActivity.user.getProfileImageURL())
+        Serializable userSerializable = getIntent().getSerializableExtra("user");
+        User user = (User) userSerializable;
+
+        tvUserName.setText(user.getName());
+        tvScreenName.setText(user.getPrettyScreenName());
+        Picasso.with(this).load(user.getProfileImageURL())
                 .noFade().fit().into(ivProfileImage);
 
     }
@@ -76,7 +82,7 @@ public class ComposeActivity extends ActionBarActivity {
             client.postTweet(etCompose.getText().toString(), new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Intent composeIntent = new Intent(ComposeActivity.this, TimelineActivity.class);
+                    Intent composeIntent = new Intent(ComposeActivity.this, MainActivity.class);
                     startActivity(composeIntent);
                     ComposeActivity.this.finish();
                 }
