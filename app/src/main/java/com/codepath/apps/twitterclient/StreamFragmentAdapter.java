@@ -12,6 +12,8 @@ import android.widget.ListView;
 
 import com.codepath.apps.twitterclient.rest.TwitterApplication;
 import com.codepath.apps.twitterclient.rest.TwitterClient;
+import com.codepath.apps.twitterclient.uihelpers.EndlessScrollListener;
+import com.codepath.apps.twitterclient.uihelpers.TwitterArrayAdapter;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -40,14 +42,7 @@ public class StreamFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int tab_index) {
         Log.d(TAG, "Getting Fragment " + tab_index);
-        StreamFragment fragment = StreamFragment.newInstance(tab_index);
-
-        if (tab_index == 0) {
-            getHomeTimeline(1, fragment);
-        } else if (tab_index == 1) {
-            getMentionsTimeline(1, fragment);
-        }
-
+        StreamFragment fragment = StreamFragment.newInstance(tab_index, null);
         return fragment;
     }
 
@@ -59,8 +54,8 @@ public class StreamFragmentAdapter extends FragmentPagerAdapter {
         TwitterApplication.getRestClient().getMentionsTimeline(page, getHandler(fragment));
     }
 
-    public static void getUserTimeline(final int userId, final int page, final StreamFragment fragment) {
-        TwitterApplication.getRestClient().getUserTimeline(userId, page, getHandler(fragment));
+    public static void getUserTimeline(final String screenName, final int page, final StreamFragment fragment) {
+        TwitterApplication.getRestClient().getUserTimeline(screenName, page, getHandler(fragment));
     }
 
     public static JsonHttpResponseHandler getHandler(final StreamFragment fragment) {
@@ -72,7 +67,6 @@ public class StreamFragmentAdapter extends FragmentPagerAdapter {
                 } else {
                     Log.e("StreamFragmentAdapter", "Error getting tweets. Status code: " + statusCode);
                 }
-                // Load json array into model classes
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.codepath.apps.twitterclient.uihelpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.codepath.apps.twitterclient.ProfileActivity;
 import com.codepath.apps.twitterclient.R;
 import com.codepath.apps.twitterclient.models.Tweet;
 import com.codepath.apps.twitterclient.models.TweetList;
@@ -25,7 +27,7 @@ public class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = (Tweet) getItem(position);
+        final Tweet tweet = (Tweet) getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.tweet, parent, false);
@@ -43,6 +45,15 @@ public class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
         tvUserScreenName.setText("@"+tweet.getUserScreenName());
         tvText.setText(tweet.getText());
         tvRelativeTime.setText(tweet.getRelativeTimeAgo());
+
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
+                profileIntent.putExtra("screen_name", tweet.getUserScreenName());
+                getContext().startActivity(profileIntent);
+            }
+        });
 
         return convertView;
     }

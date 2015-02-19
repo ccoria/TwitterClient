@@ -105,7 +105,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (id == R.id.profile) {
             Intent profileIntent = new Intent(this, ProfileActivity.class);
-            profileIntent.putExtra("user", user);
+            profileIntent.putExtra("screen_name", user.getScreenName());
             startActivity(profileIntent);
             return true;
         }

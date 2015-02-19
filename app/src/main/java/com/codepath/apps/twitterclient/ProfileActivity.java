@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.codepath.apps.twitterclient.models.TweetList;
 import com.codepath.apps.twitterclient.models.User;
 import com.codepath.apps.twitterclient.rest.TwitterApplication;
+import com.codepath.apps.twitterclient.uihelpers.EndlessScrollListener;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -25,23 +26,22 @@ import org.json.JSONObject;
 
 public class ProfileActivity extends ActionBarActivity {
     public String TAG = "**********>> " + this.getClass().getName();
-    StreamFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        String screenName = getIntent().getStringExtra("screen_name");
+        getUserInfo(screenName);
+    }
+
+    public void setUpFragment(String userScreen) {
+        Log.d(TAG, "setting up fragment for " + userScreen);
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-        fragment = StreamFragment.newInstance(0);
         // Replace the container with the new fragment
-        ft.replace(R.id.frame_stream, fragment);
-
-        String screenName = MainActivity.user.getScreenName();
-        getUserInfo(screenName);
-
+        ft.replace(R.id.frame_stream, StreamFragment.newInstance(2, userScreen));
         // or ft.add(R.id.your_placeholder, new FooFragment());
         // Execute the changes specified
         ft.commit();
@@ -69,18 +69,29 @@ public class ProfileActivity extends ActionBarActivity {
 
     }
 
-    public void populateUserPage(User user){
-        StreamFragmentAdapter.getUserTimeline(user.getId(), 1, fragment);
+    public void populateUserPage(final User user){
+        setUpFragment(user.getScreenName());
 
         Log.d(TAG, "populating user page " + user.getName());
         TextView tvUserName = (TextView) findViewById(R.id.tvUserName_profile);
-        TextView tvScreenName = (TextView) findViewById(R.id.tvCompScreenName_profile);
+        TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName_profile);
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage_profile);
+
+        TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
+        TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+        TextView tvTweets = (TextView) findViewById(R.id.tvTweets);
+
+        tvFollowers.setText(user.getFollowersCount() + " Followers");
+        tvFollowing.setText(user.getFollowingCount() + " Following");
+        tvTweets.setText(user.getTweetsCount() + " Tweets");
+
 
         tvUserName.setText(user.getName());
         tvScreenName.setText(user.getPrettyScreenName());
         Picasso.with(this).load(user.getProfileImageURL())
                 .noFade().fit().into(ivProfileImage);
+
+        getSupportActionBar().setTitle(user.getPrettyScreenName());
     }
 
 

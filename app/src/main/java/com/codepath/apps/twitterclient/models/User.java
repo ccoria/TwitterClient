@@ -21,7 +21,9 @@ public class User implements Serializable {
                     user.getString("screen_name"),
                     user.getString("profile_image_url"),
                     user.getString("profile_image_url"),
-                    user.getInt("followers_count"));
+                    user.getInt("followers_count"),
+                    user.getInt("friends_count"),
+                    user.getInt("statuses_count"));
         } catch (JSONException e) {
             Log.e(User.TAG, e.getMessage());
             e.printStackTrace();
@@ -37,6 +39,7 @@ public class User implements Serializable {
     String profileBackgrountURL;
     int followersCount;
     int followingCount;
+    int tweetsCount;
 
     //TODO: integrate with tweet and create on the database
     public User(int id,
@@ -44,13 +47,21 @@ public class User implements Serializable {
                 String screenName,
                 String profileImageURL,
                 String profileBackgrountURL,
-                int followersCount) {
+                int followersCount,
+                int followingCount,
+                int tweetsCount) {
         this.id = id;
         this.name = name;
         this.screenName = screenName;
         this.profileImageURL = profileImageURL;
         this.profileBackgrountURL = profileBackgrountURL;
         this.followersCount = followersCount;
+        this.followingCount = followingCount;
+        this.tweetsCount = tweetsCount;
+    }
+
+    public int getTweetsCount() {
+        return tweetsCount;
     }
 
     public String getProfileBackgrountURL() {
