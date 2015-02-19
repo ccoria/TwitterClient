@@ -1,5 +1,5 @@
 # Twitter Client
 
-Simple Twitter Client for Android learning
+Twitter Client for Android learning
 
-![Walkthrough](SampleTwitterClient.gif)
+![Walkthrough](SampleTwitterClientFragments.gif.gif)
