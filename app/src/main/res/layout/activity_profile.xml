@@ -6,13 +6,46 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.codepath.apps.twitterclient.ProfileActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:id="@+id/profile_info"
+        android:gravity="center_vertical|center_horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/ivProfileImage_profile"
+            android:src="@drawable/ic_launcher"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="17dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:id="@+id/tvUserName_profile"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@screenName"
+            android:id="@+id/tvCompScreenName_profile"
+            android:textColor="#ff888888"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_below="@+id/tvUserName_profile" />
+
+        </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/frame_stream"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/profile_info">
     </FrameLayout>
 
 </RelativeLayout>

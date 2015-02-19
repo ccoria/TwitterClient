@@ -120,6 +120,12 @@ public class MainActivity extends ActionBarActivity {
                 user = User.newFromJSON(response);
                 //actionBar.setTitle(actionBar.getTitle() + " - " + user.getName());
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("GETTING USER", responseString);
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
         });
     }
 }

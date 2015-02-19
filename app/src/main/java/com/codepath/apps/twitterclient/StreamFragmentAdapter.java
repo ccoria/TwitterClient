@@ -64,7 +64,8 @@ public class StreamFragmentAdapter extends FragmentPagerAdapter {
     }
 
     public static JsonHttpResponseHandler getHandler(final StreamFragment fragment) {
-        return  new JsonHttpResponseHandler() {
+        return new JsonHttpResponseHandler() {
+            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 if (statusCode == 200) {
                     fragment.addTweets(jsonArray);
