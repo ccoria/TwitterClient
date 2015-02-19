@@ -2,4 +2,4 @@
 
 Twitter Client for Android learning
 
-![Walkthrough](SampleTwitterClientFragments.gif.gif)
+![Walkthrough](SampleTwitterClientFragments.gif)
