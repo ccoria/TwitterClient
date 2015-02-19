@@ -40,8 +40,10 @@ public class ProfileActivity extends ActionBarActivity {
         Log.d(TAG, "setting up fragment for " + userScreen);
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        StreamFragment fragment = StreamFragment.newInstance(2, userScreen);
         // Replace the container with the new fragment
-        ft.replace(R.id.frame_stream, StreamFragment.newInstance(2, userScreen));
+        ft.replace(R.id.frame_stream, fragment);
         // or ft.add(R.id.your_placeholder, new FooFragment());
         // Execute the changes specified
         ft.commit();
@@ -84,7 +86,6 @@ public class ProfileActivity extends ActionBarActivity {
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFollowingCount() + " Following");
         tvTweets.setText(user.getTweetsCount() + " Tweets");
-
 
         tvUserName.setText(user.getName());
         tvScreenName.setText(user.getPrettyScreenName());

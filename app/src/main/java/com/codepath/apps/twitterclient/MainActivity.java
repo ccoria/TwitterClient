@@ -56,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new StreamFragmentAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager

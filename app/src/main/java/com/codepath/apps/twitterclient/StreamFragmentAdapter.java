@@ -46,37 +46,6 @@ public class StreamFragmentAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
-    public static void getHomeTimeline(final int page, final StreamFragment fragment) {
-        TwitterApplication.getRestClient().getHomeTimeline(page, getHandler(fragment));
-    }
-
-    public static void getMentionsTimeline(final int page, final StreamFragment fragment) {
-        TwitterApplication.getRestClient().getMentionsTimeline(page, getHandler(fragment));
-    }
-
-    public static void getUserTimeline(final String screenName, final int page, final StreamFragment fragment) {
-        TwitterApplication.getRestClient().getUserTimeline(screenName, page, getHandler(fragment));
-    }
-
-    public static JsonHttpResponseHandler getHandler(final StreamFragment fragment) {
-        return new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-                if (statusCode == 200) {
-                    fragment.addTweets(jsonArray);
-                } else {
-                    Log.e("StreamFragmentAdapter", "Error getting tweets. Status code: " + statusCode);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("StreamFragmentAdapter", "getTweets Error: " + errorResponse);
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        };
-    }
-
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position

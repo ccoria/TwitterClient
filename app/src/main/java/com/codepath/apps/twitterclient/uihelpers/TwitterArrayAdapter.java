@@ -41,6 +41,7 @@ public class TwitterArrayAdapter extends ArrayAdapter<Tweet> {
 
         Picasso.with(this.getContext()).load(tweet.getUserPicture())
                 .noFade().fit().into(ivProfileImage);
+
         tvUserName.setText(tweet.getUserName());
         tvUserScreenName.setText("@"+tweet.getUserScreenName());
         tvText.setText(tweet.getText());

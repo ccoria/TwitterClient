@@ -69,9 +69,22 @@ public class StreamFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         getTimeline(1);
 
-        super.onActivityCreated(savedInstanceState);
+        final StreamFragment fragment = this;
+        listView.setOnScrollListener(new EndlessScrollListener(3, 0) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.d("setOnScrollListener TYPE: " + mType, "calling page " + page);
+                fragment.getTimeline(page);
+            }
+        });
+    }
+
+    public void setUpEndlessScroll () {
+
     }
 
     public void addTweets (JSONArray jsonArrayTweets) {
@@ -92,15 +105,6 @@ public class StreamFragment extends Fragment {
         } else if (mType == 2) {
             getUserTimeline(page, screenName);
         }
-
-        StreamFragment fragment = this;
-        listView.setOnScrollListener(new EndlessScrollListener(3, 0) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                Log.d("setOnScrollListener TYPE: " + mType, "calling page " + page);
-                //getTimeline(page);
-            }
-        });
     }
 
     public void getHomeTimeline(int page) {
